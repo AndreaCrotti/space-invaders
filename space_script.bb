@@ -1,9 +1,10 @@
 #!/usr/bin/env bb
 
 (ns space-script
-  (:require [space]
-            [babashka.cli :as cli]
-            [babashka.fs :as fs]))
+  (:require
+   [babashka.cli :as cli]
+   [babashka.fs :as fs]
+   [space]))
 
 (defn file-exists?
   [path]
@@ -13,7 +14,7 @@
   {:spec
    {:invaders
     {:desc     "Invaders definitions"
-     :alias    :n
+     :alias    :i
      :validate #(every? true? (map file-exists? %))
      :coerce   #{}
      :require  true}
@@ -45,6 +46,11 @@
                (System/exit 1)))]
     (if (or (:help opts) (:h opts))
       (println (show-help cli-spec))
-      (println "thinking about it very hard"))))
+      (let [{:keys [radar fuzzyness invaders]} opts
+            invaders-map (into {}
+                           (for [i invaders]
+                             [(fs/file-name i) (space/parse-file i)]))
+            result (space/detect-invaders (space/parse-file radar) invaders-map fuzzyness)]
+        (space/format-result result)))))
 
 (-main)
