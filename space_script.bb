@@ -47,10 +47,11 @@
     (if (or (:help opts) (:h opts))
       (println (show-help cli-spec))
       (let [{:keys [radar fuzzyness invaders]} opts
+            radar (space/parse-file radar)
             invaders-map (into {}
-                           (for [i invaders]
-                             [(fs/file-name i) (space/parse-file i)]))
-            result (space/detect-invaders (space/parse-file radar) invaders-map fuzzyness)]
-        (space/format-result result)))))
+                               (for [i invaders]
+                                 [(fs/file-name i) (space/parse-file i)]))
+            result (space/detect-invaders radar invaders-map fuzzyness)]
+        (space/format-result radar result)))))
 
 (-main)

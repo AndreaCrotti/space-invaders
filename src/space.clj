@@ -63,14 +63,17 @@
           {name (find-invader radar-signal invader fuzziness)})))
 
 (defn format-result
-  [result]
+  [radar result]
   (doseq [[inv-name matches] result
-          {:keys [coords ratio]} matches]
-    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n"
+          {:keys [coords ratio]} matches
+          :let [[start end] coords
+                match (submatrix-str radar start end)]]
+    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
             inv-name
             (* 100 (double ratio))
-            (first coords)
-            (second coords))))
+            start
+            end
+            (string/join "\n" match))))
 
 (defn parse-file
   [f]
