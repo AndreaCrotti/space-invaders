@@ -29,21 +29,17 @@
          (space/submatrix-str ["abc" "def" "xyz"] [0 0] [2 2]))))
 
 (deftest iter-shapes-test
-  (testing "Square space works"
-    (is (= {[0 0] ["oo" "o-"],
-            [0 1] ["oo" "-o"],
-            [1 0] ["o-" "--"],
-            [1 1] ["-o" "--"]}
-           (space/iter-shapes ["ooo" "o-o" "---"] 2 2))))
-
-  (testing "Rectangular shape works"
-    (is (= {[0 0] ["o" "o"],
-            [0 1] ["o" "-"],
-            [0 2] ["o" "o"],
-            [1 0] ["o" "-"],
-            [1 1] ["-" "-"],
-            [1 2] ["o" "-"]}
-           (space/iter-shapes ["ooo" "o-o" "---"] 2 1)))))
+  (testing "Can also handle edges correctly"
+    (is (= {[0 0] ["oo" "--"],
+            [1 0] ["--" "  "],
+            [-1 0] ["  " "oo"],
+            [1 1] ["- " "  "],
+            [-1 -1] ["  " " o"],
+            [1 -1] [" -" "  "],
+            [-1 1] ["  " "o "],
+            [0 -1] [" o" " -"],
+            [0 1] ["o " "- "]}
+           (space/iter-shapes ["oo" "--"] 2 2)))))
 
 (deftest find-invaders-test
   (is (= {"inv1.txt" [{:coords [[13 60] [21 71]], :ratio (/ 10 11)}]}
