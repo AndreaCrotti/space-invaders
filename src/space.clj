@@ -43,12 +43,18 @@
                                        (get shape-2 i))))
        n-chars)))
 
+(defn end-coords
+  [[x y] invader]
+  (let [[n-rows n-cols] (shape-size invader)]
+    [(+ x n-rows) (+ y n-cols)]))
+
 (defn find-invader
   [radar-signal invader fuzziness]
   (let [[n-rows n-cols] (shape-size invader)]
     (for [[coords sub] (iter-shapes radar-signal n-rows n-cols)
           :when (>= (matching-ratio invader sub) fuzziness)]
-      {:coords coords, :ratio (matching-ratio sub invader)})))
+      {:coords [coords (end-coords coords invader)]
+       :ratio (matching-ratio sub invader)})))
 
 (defn detect-invaders
   [radar-signal invaders fuzziness]
@@ -60,10 +66,11 @@
   [result]
   (doseq [[inv-name matches] result
           {:keys [coords ratio]} matches]
-    (printf "\nFound match for %s with probability %.3f%% at coordinates %s\n"
+    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n"
             inv-name
             (* 100 (double ratio))
-            coords)))
+            (first coords)
+            (second coords))))
 
 (defn parse-file
   [f]
@@ -78,17 +85,3 @@
                        (for [if invader-files]
                          [(.getName (io/file if)) (parse-file if)]))]
     (detect-invaders radar invaders fuzziness)))
-
-(comment
-  (def r (find-invaders "resources/radar.txt"
-                        ["resources/inv1.txt"]
-                        0.9))
-  (format-result r)
-
-  (println
-   (clojure.string/join
-    "\n"
-    (submatrix-str (parse-file "resources/radar.txt")
-                   [13 60]
-                   [21 71])))
-  )

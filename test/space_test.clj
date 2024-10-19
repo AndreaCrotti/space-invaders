@@ -16,7 +16,7 @@
 
 (deftest space-test
   (testing "Can find coordinates"
-    (is (= [{:coords [1 1], :ratio 1}]
+    (is (= [{:coords [[1 1] [4 4]], :ratio 1}]
            (space/find-invader radar-signal simple-invader 1)))))
 
 (deftest matching-test
@@ -45,5 +45,6 @@
             [1 2] ["o" "-"]}
            (space/iter-shapes ["ooo" "o-o" "---"] 2 1)))))
 
-(comment
-  (clojure.test/run-all-tests))
+(deftest find-invaders-test
+  (is (= {"inv1.txt" [{:coords [[13 60] [21 71]], :ratio (/ 10 11)}]}
+         (space/find-invaders "resources/radar.txt" ["resources/inv1.txt"] 0.9))))
