@@ -1,5 +1,8 @@
-(ns space)
+(ns space
+  (:require [cljs.core :as c]))
 
-(defn init
-  []
-  )
+(defn hello-world []
+  (println "Hello, World!"))
+
+(c/set! js/window.myApp
+        (fn [] (hello-world)))
