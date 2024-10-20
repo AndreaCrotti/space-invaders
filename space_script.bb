@@ -4,6 +4,7 @@
   (:require
    [babashka.cli :as cli]
    [babashka.fs :as fs]
+   [bblgum.core :refer [gum]]
    [space]))
 
 (defn file-exists?
