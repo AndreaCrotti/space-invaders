@@ -85,6 +85,11 @@
        (sort-by :ratio)
        reverse))
 
+(defn format-match
+  [match]
+  (-> (string/join "\n" match)
+      (string/replace "-" " ")))
+
 (defn format-result
   [radar result]
   (doseq [[inv-name matches] result
@@ -97,7 +102,7 @@
             (ratio->percent ratio)
             start
             end
-            (string/join "\n" match))))
+            (format-match match))))
 
 (defn parse-file
   [f]
