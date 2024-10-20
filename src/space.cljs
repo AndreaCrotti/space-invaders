@@ -4,5 +4,5 @@
 (defn hello-world []
   (println "Hello, World!"))
 
-(c/set! js/window.myApp
-        (fn [] (hello-world)))
+(defn init []
+  (println "hello"))
