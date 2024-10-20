@@ -91,19 +91,6 @@
   (-> (string/join "\n" match)
       (string/replace "-" " ")))
 
-(defn format-result
-  [radar result]
-  (doseq [[inv-name matches] result
-          {:keys [start end ratio]} (sort-matches matches)
-          :let [match (submatrix-str radar start end)]]
-
-    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
-            inv-name
-            (ratio->percent ratio)
-            start
-            end
-            (format-match match))))
-
 (defn parse-file
   [f]
   (-> f
@@ -117,3 +104,16 @@
                        (for [if invader-files]
                          [(.getName (io/file if)) (parse-file if)]))]
     (detect-invaders radar invaders fuzziness)))
+
+(defn format-result
+  [radar result]
+  (doseq [[inv-name matches] result
+          {:keys [start end ratio]} (sort-matches matches)
+          :let [match (submatrix-str radar start end)]]
+
+    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
+            inv-name
+            (ratio->percent ratio)
+            start
+            end
+            (format-match match))))
