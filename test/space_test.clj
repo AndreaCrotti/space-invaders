@@ -16,7 +16,7 @@
 
 (deftest space-test
   (testing "Can find coordinates"
-    (is (= [{:coords [[1 1] [4 4]], :ratio 1}]
+    (is (= [{:start [1 1], :end [4 4], :ratio 1}]
            (space/find-invader radar-signal simple-invader 1)))))
 
 (deftest matching-test
@@ -42,5 +42,5 @@
            (space/iter-shapes ["oo" "--"] 2 2)))))
 
 (deftest find-invaders-test
-  (is (= {"inv1.txt" [{:coords [[13 60] [21 71]], :ratio (/ 10 11)}]}
+  (is (= {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}
          (space/find-invaders "resources/radar.txt" ["resources/inv1.txt"] 0.9))))

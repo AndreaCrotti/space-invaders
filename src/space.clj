@@ -65,8 +65,9 @@
   [radar-signal invader fuzziness]
   (let [[n-rows n-cols] (shape-size invader)]
     (for [[coords sub] (iter-shapes radar-signal n-rows n-cols)
-          :when (>= (matching-ratio invader sub) fuzziness)]
-      {:coords [coords (end-coords coords invader)]
+          :when        (>= (matching-ratio invader sub) fuzziness)]
+      {:start coords
+       :end   (end-coords coords invader)
        :ratio (matching-ratio sub invader)})))
 
 (defn detect-invaders
@@ -93,9 +94,8 @@
 (defn format-result
   [radar result]
   (doseq [[inv-name matches] result
-          {:keys [coords ratio]} (sort-matches matches)
-          :let [[start end] coords
-                match (submatrix-str radar start end)]]
+          {:keys [start end ratio]} (sort-matches matches)
+          :let [match (submatrix-str radar start end)]]
 
     (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
             inv-name
