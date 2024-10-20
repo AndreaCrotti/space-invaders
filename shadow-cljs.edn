@@ -8,5 +8,4 @@
    :asset-path "/js"
    :modules {:space {:init-fn space/init}}}}
 
- :dev-http
- {8000 "public"}}
+ :dev-http {8000 "public"}}
