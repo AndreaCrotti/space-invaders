@@ -7,18 +7,31 @@
   [shape]
   [(count shape) (count (first shape))])
 
+(defn padding-subs
+  [s from to]
+  (->>(range from to)
+       (map #(nth s % " "))
+       (string/join "")))
+
+(defn padding-rows
+  [matrix from to length]
+  (into []
+        (for [l (range from to)]
+          (nth matrix l (string/join (repeat length " "))))))
+
 (defn submatrix-str
   [matrix [x y] [x' y']]
-  (take (- x' x)
-        (map #(subs % y y')
-              (drop x matrix))))
+  (map #(padding-subs % y y')
+       (padding-rows matrix x x' (- y' y))))
 
 (defn iter-shapes
   [radar n-rows n-columns]
   (let [[x y] (shape-size radar)]
     (into {}
-          (for [i (range (inc (- x n-rows)))
-                j (range (inc (- y n-columns)))]
+          (for [i (range (- (dec n-rows))
+                         (- (+ x n-rows) 2))
+                j (range (- (dec n-columns))
+                         (- (+ y n-columns) 2))]
             [[i j] (vec (submatrix-str radar
                                        [i j]
                                        [(+ i n-rows) (+ j n-columns)]))]))))
@@ -62,15 +75,26 @@
         (for [[name invader] invaders]
           {name (find-invader radar-signal invader fuzziness)})))
 
+(defn- ratio->percent
+  [ratio]
+  (* 100 (double ratio)))
+
+(defn sort-matches
+  [ms]
+  (->> ms
+       (sort-by :ratio)
+       reverse))
+
 (defn format-result
   [radar result]
   (doseq [[inv-name matches] result
-          {:keys [coords ratio]} matches
+          {:keys [coords ratio]} (sort-matches matches)
           :let [[start end] coords
                 match (submatrix-str radar start end)]]
+
     (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
             inv-name
-            (* 100 (double ratio))
+            (ratio->percent ratio)
             start
             end
             (string/join "\n" match))))
