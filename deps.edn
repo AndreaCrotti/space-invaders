@@ -1,3 +1,5 @@
-{:deps {}
+{:deps {org.clojure/clojurescript {:mvn/version "1.11.132"}
+        quil/quil {:mvn/version "4.3.1563"}
+        thheller/shadow-cljs {:mvn/version "2.28.18"}}
  :aliases
  {:dev {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}}}}

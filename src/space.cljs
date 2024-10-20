@@ -1,0 +1,5 @@
+(ns space)
+
+(defn init
+  []
+  )
