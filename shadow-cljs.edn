@@ -1,12 +1,5 @@
-;; .shadow-cljs.edn
-
-{:source-paths
- ["src"]
-
- :dependencies
- [[org.clojure/clojurescript "1.11.132"]
-  ;; [thheller/shadow-cljs "2.28.18"]
-  [quil/quil "4.3.1563"]]
+{:source-paths ["src"]
+ :deps true
 
  :builds
  {:app
