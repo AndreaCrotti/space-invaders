@@ -64,11 +64,11 @@
 
 (defn format-result
   [radar result]
-  (doseq [[inv-name matches] result
-          {:keys [coords ratio]} matches
-          :let [[start end] coords
-                match (submatrix-str radar start end)]]
-    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
+  (for [[inv-name matches] result
+        {:keys [coords ratio]} matches
+        :let [[start end] coords
+              match (submatrix-str radar start end)]]
+    (format "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
             inv-name
             (* 100 (double ratio))
             start

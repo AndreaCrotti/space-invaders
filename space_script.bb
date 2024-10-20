@@ -5,6 +5,7 @@
    [babashka.cli :as cli]
    [babashka.fs :as fs]
    [bblgum.core :refer [gum]]
+   [clojure.string :as s]
    [space]))
 
 (defn file-exists?
@@ -52,7 +53,9 @@
             invaders-map (into {}
                                (for [i invaders]
                                  [(fs/file-name i) (space/parse-file i)]))
-            result (space/detect-invaders radar invaders-map fuzzyness)]
-        (space/format-result radar result)))))
+            result (space/detect-invaders radar invaders-map fuzzyness)
+            out (s/join "\n" (space/format-result radar result))]
+
+        (gum :pager :as :ignored :in out)))))
 
 (-main)
