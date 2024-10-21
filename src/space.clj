@@ -1,7 +1,8 @@
 (ns space
   (:require
    [clojure.java.io :as io]
-   [clojure.string :as string]))
+   [clojure.string :as string]
+   [helpers :refer [parse-file ratio->percent]]))
 
 (defn shape-size
   [shape]
@@ -60,23 +61,19 @@
     [(+ x n-rows) (+ y n-cols)]))
 
 (defn find-invader
-  [radar-signal invader fuzziness]
+  [radar invader fuzziness]
   (let [[n-rows n-cols] (shape-size invader)]
-    (for [[coords sub] (iter-shapes radar-signal n-rows n-cols)
+    (for [[coords sub] (iter-shapes radar n-rows n-cols)
           :when        (>= (matching-ratio invader sub) fuzziness)]
       {:start coords
        :end   (end-coords coords invader)
        :ratio (matching-ratio sub invader)})))
 
 (defn detect-invaders
-  [radar-signal invaders fuzziness]
+  [radar invaders fuzziness]
   (into {}
         (for [[name invader] invaders]
-          {name (find-invader radar-signal invader fuzziness)})))
-
-(defn- ratio->percent
-  [ratio]
-  (* 100 (double ratio)))
+          {name (find-invader radar invader fuzziness)})))
 
 (defn sort-matches
   [ms]
@@ -90,12 +87,6 @@
        ;; trimming white space on the right is just to avoid trailing whitespaces in the test data
        (map (comp string/trimr #(string/replace % "-" " ")))
        (string/join "\n")))
-
-(defn parse-file
-  [f]
-  (-> f
-      slurp
-      string/split-lines))
 
 (defn find-invaders
   [radar-file invader-files fuzziness]

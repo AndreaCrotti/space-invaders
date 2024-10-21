@@ -8,7 +8,7 @@
    "oo-"
    "ooo"])
 
-(def radar-signal
+(def simple-radar
   ["----"
    "--o-"
    "-oo-"
@@ -17,7 +17,7 @@
 (deftest space-test
   (testing "Can find coordinates"
     (is (= [{:start [1 1], :end [4 4], :ratio 1}]
-           (space/find-invader radar-signal simple-invader 1)))))
+           (space/find-invader simple-radar simple-invader 1)))))
 
 (deftest matching-test
   (are [x y ratio] (= ratio (space/matching-ratio x y))
