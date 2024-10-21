@@ -50,10 +50,8 @@
   (let [[x y]   (shape-size shape-1)
         n-chars (* x y)]
     (/ (reduce +
-               ;; TODO: could be improved slightly here
-               (for [i (range (count shape-1))]
-                 (count-matching-chars (get shape-1 i)
-                                       (get shape-2 i))))
+               (for [[s1 s2] (zipmap shape-1 shape-2)]
+                 (count-matching-chars s1 s2)))
        n-chars)))
 
 (defn end-coords
