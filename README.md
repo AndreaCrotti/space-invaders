@@ -1,4 +1,4 @@
-![test and lint](https://github.com/AndreaCrotti/space-invaders/actions/workflows/test.yml/badge.svg)
+[![test and lint](https://github.com/AndreaCrotti/space-invaders/actions/workflows/test.yml/badge.svg)](https://github.com/AndreaCrotti/space-invaders/actions/workflows/test.yml)
 
 # Space invaders
 
