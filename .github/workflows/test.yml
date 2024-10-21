@@ -41,3 +41,6 @@ jobs:
 
       - name: Run clj-kondo
         run: ./lint
+
+      - name: Run full command and check that matches are found
+        run: ./space_script.bb -r test/resources/radar.txt -i test/resources/inv1.txt -f 0.9 | grep "Found match"
