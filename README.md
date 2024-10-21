@@ -31,6 +31,13 @@ The output would look something like:
 Tests are in the [space_test.clj file](./test/space_test.clj), and you can run them [./kaocha](./kaocha), which will also generate the test coverage report.
 Tests and linting (with the [lint script](./lint)) also run as [github actions](https://github.com/AndreaCrotti/space-invaders/actions).
 
+There are no unit tests for the babashka script, but it's also tested in CI, just by running the command and grepping for a string:
+
+```yaml
+    - name: Run full command and check that matches are found
+      run: ./space_script.bb -r test/resources/radar.txt -i test/resources/inv1.txt -f 0.9 | grep "Found match"
+```
+
 ## Implementation
 
 The implementation is as functional as possible, all the functions are just manipulating data structures.
