@@ -44,7 +44,7 @@
 
 (deftest find-invaders-test
   (is (= {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}
-         (space/find-invaders "resources/radar.txt" ["resources/inv1.txt"] 0.9))))
+         (space/find-invaders "test/resources/radar.txt" ["test/resources/inv1.txt"] 0.9))))
 
 (def sample-output "
 Found match for inv1.txt with probability 90.909% from [13 60] to [21 71]
@@ -60,5 +60,5 @@ o o     o o
 
 (deftest format-test
   (is (= [sample-output]
-         (space/format-result (space/parse-file "resources/radar.txt")
+         (space/format-result (space/parse-file "test/resources/radar.txt")
                               {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}))))

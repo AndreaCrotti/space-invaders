@@ -5,13 +5,20 @@
 Run for example with babashka:
 
 ```sh
-./space_script.bb -r resources/radar.txt -i resources/inv1.txt
+./space_script.bb -r test/resources/radar.txt -i test/resources/inv1.txt
 ```
 
-You can change the fuzziness level with:
+Pass multiple invaders files with:
 
 ```sh
-./space_script.bb -r resources/radar.txt -i resources/inv1.txt -f 0.6
+./space_script.bb -r test/resources/radar.txt -i test/resources/inv1.txt test/resources/inv2.txt
+```
+
+
+And you can change the fuzziness level with:
+
+```sh
+./space_script.bb -r test/resources/radar.txt -i test/resources/inv1.txt -f 0.6
 ```
 
 Which means that any shape that matches at least 60% would be detected.
