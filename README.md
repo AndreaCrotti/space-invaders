@@ -19,6 +19,11 @@ Which means that any shape that matches at least 60% would be detected.
 The output would look something like:
 ![space script screenshot](./screenshot.png)
 
+## Testing
+
+Tests are in the [space_test.clj file](./test/space_test.clj), and you can run them [./kaocha](./kaocha), which will also generate the test coverage report.
+Tests and linting (with the [lint script](./lint)) also run as [github actions](https://github.com/AndreaCrotti/space-invaders/actions).
+
 ## Implementation
 
 The implementation is as functional as possible, all the functions are just manipulating data structures.
