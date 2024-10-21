@@ -50,3 +50,5 @@ To handle edges we also go outside of the boundaries of the overall matrix.
 
 This strategy is overall not very efficient, since every extra invader would cause a full re-analysis of the matrix.
 However, for the purpose of this exercise I didn't try to make the solution efficient, and just focused on clean and simple code.
+
+Even using this same algorithm, one easy thing to do would be to use the [core.matrix library](https://github.com/mikera/core.matrix), which should significantly speed up all the operations on the matrix.
