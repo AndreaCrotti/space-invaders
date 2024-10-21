@@ -5,6 +5,7 @@
    [babashka.cli :as cli]
    [babashka.fs :as fs]
    [clojure.string :as string]
+   [helpers :refer [parse-file]]
    [space]))
 
 (defn file-exists?
@@ -48,10 +49,10 @@
     (if (or (:help opts) (:h opts))
       (println (show-help cli-spec))
       (let [{:keys [radar fuzzyness invaders]} opts
-            radar (space/parse-file radar)
+            radar (parse-file radar)
             invaders-map (into {}
                                (for [i invaders]
-                                 [(fs/file-name i) (space/parse-file i)]))
+                                 [(fs/file-name i) (parse-file i)]))
             result (space/detect-invaders radar invaders-map fuzzyness)]
         (println
          (string/join "\n"
