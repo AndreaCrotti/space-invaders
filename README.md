@@ -16,11 +16,14 @@ You can change the fuzziness level with:
 
 Which means that any shape that matches at least 60% would be detected.
 
+The output would look something like:
+![space script screenshot](./screenshot.png)
+
 ## Implementation
 
-The implementation is as functional as possible, all the functions are simply manipulating data structures.
+The implementation is as functional as possible, all the functions are just manipulating data structures.
 
-The arguments parsing is done in the [babashka script](./space_script.bb).
+The arguments parsing is in the [babashka script](./space_script.bb).
 
 The main data structure is a vector of strings like:
 

@@ -47,7 +47,7 @@
 (defn matching-ratio
   [shape-1 shape-2]
   (assert (= (count shape-1) (count shape-2)), "Shapes must have the same size")
-  (let [[x y] (shape-size shape-1)
+  (let [[x y]   (shape-size shape-1)
         n-chars (* x y)]
     (/ (reduce +
                ;; TODO: could be improved slightly here
@@ -88,8 +88,10 @@
 
 (defn format-match
   [match]
-  (-> (string/join "\n" match)
-      (string/replace "-" " ")))
+  (->> match
+       ;; trimming white space on the right is just to avoid trailing whitespaces in the test data
+       (map (comp string/trimr #(string/replace % "-" " ")))
+       (string/join "\n")))
 
 (defn parse-file
   [f]
@@ -99,7 +101,7 @@
 
 (defn find-invaders
   [radar-file invader-files fuzziness]
-  (let [radar (parse-file radar-file)
+  (let [radar    (parse-file radar-file)
         invaders (into {}
                        (for [if invader-files]
                          [(.getName (io/file if)) (parse-file if)]))]
@@ -107,11 +109,11 @@
 
 (defn format-result
   [radar result]
-  (doseq [[inv-name matches] result
-          {:keys [start end ratio]} (sort-matches matches)
-          :let [match (submatrix-str radar start end)]]
+  (for [[inv-name matches]        result
+        {:keys [start end ratio]} (sort-matches matches)
+        :let                      [match (submatrix-str radar start end)]]
 
-    (printf "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
+    (format "\nFound match for %s with probability %.3f%% from %s to %s\n%s\n"
             inv-name
             (ratio->percent ratio)
             start

@@ -1,3 +1,4 @@
 {:deps {}
  :aliases
- {:dev {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}}}}
+ {:dev {:extra-deps {lambdaisland/kaocha           {:mvn/version "1.87.1366"}
+                     lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}}}}

@@ -1,6 +1,6 @@
 (ns space-test
   (:require
-   [clojure.test :refer [deftest is testing]]
+   [clojure.test :refer [deftest is testing are]]
    [space]))
 
 (def simple-invader
@@ -20,9 +20,10 @@
            (space/find-invader radar-signal simple-invader 1)))))
 
 (deftest matching-test
-  (is (= (/ 1 3)
-         ;; two chars out of six match
-         (space/matching-ratio ["001" "000"] ["110" "001"]))))
+  (are [x y ratio] (= ratio (space/matching-ratio x y))
+    ["001" "000"] ["110" "001"] (/ 1 3)
+    ["00" "11"] ["11" "00"] 0
+    ["00" "11"] ["00" "11"] 1))
 
 (deftest submatrix-test
   (is (= ["ab" "de"]
@@ -44,3 +45,20 @@
 (deftest find-invaders-test
   (is (= {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}
          (space/find-invaders "resources/radar.txt" ["resources/inv1.txt"] 0.9))))
+
+(def sample-output "
+Found match for inv1.txt with probability 90.909% from [13 60] to [21 71]
+  o     o
+       o
+  oooo oo
+    ooo oo
+o  oooooo o
+o o ooooo o
+o o     o o
+   oo oo
+")
+
+(deftest format-test
+  (is (= [sample-output]
+         (space/format-result (space/parse-file "resources/radar.txt")
+                              {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}))))
