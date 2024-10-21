@@ -1,6 +1,7 @@
 (ns space-test
   (:require
-   [clojure.test :refer [deftest is testing are]]
+   [clojure.test :refer [are deftest is testing]]
+   [helpers :refer [parse-file]]
    [space]))
 
 (def simple-invader
@@ -60,5 +61,5 @@ o o     o o
 
 (deftest format-test
   (is (= [sample-output]
-         (space/format-result (space/parse-file "test/resources/radar.txt")
+         (space/format-result (parse-file "test/resources/radar.txt")
                               {"inv1.txt" [{:start [13 60], :end [21 71] , :ratio (/ 10 11)}]}))))
